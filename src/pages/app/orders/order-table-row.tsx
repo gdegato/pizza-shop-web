@@ -1,13 +1,25 @@
 import { ArrowRight, Search, X } from 'lucide-react'
+import { formatDistanceToNow } from 'date-fns'
+
+import { OrderStatus } from '@/components/order-status'
+import { ptBR } from 'date-fns/locale'
 
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { OrderDetails } from './order-details'
 
-// interface OrderTableRowProps {}
+interface OrderTableRowProps {
+    order: {
+        orderId: string
+        createdAt: string
+        status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+        customerName: string
+        total: number
+    }
+}
 
-export function OrderTableRow() {
+export function OrderTableRow({ order }: OrderTableRowProps) {
     return (
         <TableRow>
             <TableCell>
@@ -24,14 +36,23 @@ export function OrderTableRow() {
                 </Dialog>
             </TableCell>
             <TableCell className="font-mono text-xs font-medium">
-                821e78f7asdhdf128h
+                {order.orderId}
             </TableCell>
-            <TableCell className="text-muted-foreground">há 15 minutos</TableCell>
+            <TableCell className="text-muted-foreground">
+                {formatDistanceToNow(order.createdAt, {
+                    locale: ptBR,
+                    addSuffix: true,
+                })}
+            </TableCell>
             <TableCell>
-                <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-slate-400" />
-                    <span className="font-medium text-muted-foreground">Pendente</span>
-                </div>
+                <OrderStatus status={order.status} />
+            </TableCell>
+            <TableCell className="font-medium">{order.customerName}</TableCell>
+            <TableCell className="font-medium">
+                {order.total.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                })}
             </TableCell>
             <TableCell className="font-medium">Diego Schell Fernandes</TableCell>
             <TableCell className="font-medium">R$ 149,90</TableCell>
