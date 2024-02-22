@@ -7,7 +7,7 @@ const onPageChangeCallback = vi.fn() //spyon
 
 describe('Pagination', () => {
     beforeEach(() => {
-        onPageChangeCallback.mockClear()
+        onPageChangeCallback.mockClear() // limpa as chamadas a cada teste
     })
     it('should display the right amount of pages and results', () => {
         const wrapper = render(
