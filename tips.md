@@ -13,3 +13,11 @@ quando não puder identificar o conteúdo de uma tag(veja exemplo abaixo que nã
    data-testid="badge"
     className="h-2 w-2 rounded-full bg-rose-500"
     />
+
+    getByRole: procura pela tag, ex: 
+     const nextPageButton = wrapper.getByRole('button', {
+      name: 'Próxima página',
+    })
+
+    Instalação de bibliotecas:  npm i -D @testing-library/user-event
+    para realizar eventos de clicks e demais interações dos usuários
